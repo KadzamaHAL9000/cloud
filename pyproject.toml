@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "chocolate-fiesta-cloud-backend"
+version = "0.1.0"
+description = ""
+authors = ["Roman Fasakhov <fasashen@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.70.0"
+solidpython = "^1.1.1"
+loguru = "^0.5.3"
+aiofiles = "^0.6.0"
+plotly = "^4.14.1"
+firebase-admin = "^5.0.3"
+uvicorn = "^0.15.0"
+sentry-sdk = "^0.20.3"
+pytest = "^6.2.2"
+pytest-mock = "^3.6.1"
+
+[tool.poetry.dev-dependencies]
+uvicorn = "^0.15.0"
+mypy = "^0.910"
+flake8 = "^3.9.2"
+black = "19.10b0"
+isort = "^5.9.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

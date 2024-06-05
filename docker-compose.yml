@@ -1,0 +1,30 @@
+services:
+  web:
+    image: chocolatefiesta/cloud:latest
+    environment:
+      - PORT=5000
+      - CORS_MIDDLEWARE_ALLOW_ORIGINS=https://cloud.chocolatefiesta.ru
+      - FIREBASE_PRIVATE_KEY_ID=${FIREBASE_PRIVATE_KEY_ID}
+      - FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY}
+      - FIREBASE_CLIENT_ID=${FIREBASE_CLIENT_ID}
+    expose:
+      - 5000    
+    volumes:
+      - /etc/fiesta:/etc/fiesta
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fastapi.rule=Host(`${CLOUD_HOSTNAME}`)
+      - traefik.http.services.fiesta.loadbalancer.server.port=5000
+      - traefik.http.routers.fastapi.tls=true
+      - traefik.http.routers.fastapi.tls.certresolver=letsencrypt
+  traefik:
+    image: traefik:v2.4
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "$PWD/traefik/traefik.prod.toml:/etc/traefik/traefik.toml"
+      - "/etc/traefik/acme.json:/acme.json"
